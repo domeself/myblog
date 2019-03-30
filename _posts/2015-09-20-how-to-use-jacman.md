@@ -38,7 +38,7 @@ imglogo:
   enable: true               ## 是否显示网站 logo
   src: img/logo.png        
 favicon: img/favicon.ico     ## 网站图标    
-apple_icon: img/jacman.jpg   ## 苹果设备上的图标，背景不要透明
+apple_icon: img/supernova.jpg   ## 苹果设备上的图标，背景不要透明
 author_img: img/author.jpg   ## 网站底部的博主头像
 banner_img: img/banner.jpg   ## 博客顶部的图片
 
