@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Redis 瑞士军刀"
-categories: Other
-tags: Other
+categories: Other1
+tags: Other2
 author: supernova
 description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
 ---
