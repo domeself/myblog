@@ -25,7 +25,7 @@ description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
         =-1，不记录任何命令
         建议设置1ms
     * 一般通过config set 动态配置
-    ```
+     ```
          config set  slowlog-max-len  1000
          config set  slowlog-log-slower-than  10000
     ```
@@ -120,7 +120,7 @@ description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
     * 只能统计数量，并不能得到具体元素
 ## GEO  
 计算地理位置相关
-    ```
+ ```
     //向key中添加城市和对应的经纬度
         geoadd  key  longitude latitude member
         //获取城市的经纬度
@@ -133,5 +133,5 @@ description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
         //根据城市获取范围内的城市
         georadiusbymember key member radiusm|km|ft|mi [withcoord]  
         [withdist] [withhash][Count count][asc|desc][store key][storedistkey]
-    ```
+ ```
    
