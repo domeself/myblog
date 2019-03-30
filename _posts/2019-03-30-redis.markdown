@@ -84,18 +84,18 @@ description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
         pubsub numsub[channel...]
     ```
 ## bitmap(位图)  
-   Bitmap是一串连续的2进制数字（0或1），每一位所在的位置为偏移(offset)  
-   位图计数（Population Count）是bitmap中值为1的位的个数。  
-   位图计数的效率很高  
-   ```$xslt
+   Bitmap是一串连续的2进制数字（0或1），每一位所在的位置为偏移(offset)  位图计数（Population Count）
+   是bitmap中值为1的位的个数。位图计数的效率很高。
+* 命令 
+   ```
     设置key中偏移量为offset，为value  
     setbit key offset value 
     //获得key中偏移量为offset的value
     getbit key offset
     //获取范围内bit为1的数量，如果不指定就为全部范围
     bitcount key [start end]
-```
- * 应用(统计活跃用户)  
+    ```
+* 应用(统计活跃用户)  
     
     为了统计今日登录的用户数，我们建立了一个bitmap,每一位标识一个用户ID。  
     当某个用户访问我们的网页或执行了某个操作，就在bitmap中把标识此用户的位置为1。  
@@ -106,7 +106,7 @@ description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
     我们简单地把日期添加到key后面。如果要按周或月统计，只要对这周或这个月的  
     所有bitmap求并集，得出新的bitmap，在对它做位图计数。
 ## Hyperloglog    
-   * 基于HyperLogLog算法，极小空间完成独立数量统计    
+* 基于HyperLogLog算法，极小空间完成独立数量统计    
    ```        
     添加元素
     pfadd key element[elements...]
@@ -115,12 +115,12 @@ description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
     合并多个typerLoglog
     pfmerge destkey  sourcekey[sourcekey...]
    ```
-   * 注意事项  
-        * 错误率0.81%
-        * 只能统计数量，并不能得到具体元素
+* 注意事项  
+    * 错误率0.81%
+    * 只能统计数量，并不能得到具体元素
 ## GEO  
 计算地理位置相关
-   ```
+    ```
     //向key中添加城市和对应的经纬度
         geoadd  key  longitude latitude member
         //获取城市的经纬度
@@ -133,5 +133,5 @@ description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
         //根据城市获取范围内的城市
         georadiusbymember key member radiusm|km|ft|mi [withcoord]  
         [withdist] [withhash][Count count][asc|desc][store key][storedistkey]
-   ```
+    ```
    
