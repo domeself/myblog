@@ -25,10 +25,10 @@ description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
         =-1，不记录任何命令
         建议设置1ms
     * 一般通过config set 动态配置
-    ```
+ ```
          config set  slowlog-max-len  1000
          config set  slowlog-log-slower-than  10000
-    ```
+ ```
 
  * 命令
     ```
