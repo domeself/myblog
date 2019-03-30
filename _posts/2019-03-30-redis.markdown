@@ -119,7 +119,7 @@ description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
     * 错误率0.81%
     * 只能统计数量，并不能得到具体元素
 ## GEO  
-计算地理位置相关
+* 计算地理位置相关
  ```
     //向key中添加城市和对应的经纬度
         geoadd  key  longitude latitude member
