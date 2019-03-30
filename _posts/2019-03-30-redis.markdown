@@ -65,7 +65,7 @@ description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
         redis>publish channelName "messger"
         返回订阅者个数
      ```
-    * 订阅者(subscriber)
+* 订阅者(subscriber)
     ```
         订阅：
         redis>subscriber channelName
@@ -76,7 +76,7 @@ description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
         取消模式匹配订阅
         redis>punsubscriber [pattern...]
     ```
-    * 频道(channel)
+* 频道(channel)
     ```
         //查看至少有一个订阅者的频道
         pubsub channels
