@@ -60,8 +60,7 @@ description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
 
 ## 发布订阅   
 发布者发布了一个信息到频道，所有订阅的频道的订阅者都能收到
-* 角色
-    * 发布者(publisher)
+* 发布者(publisher)
     ```
         redis>publish channelName "messger"
         返回订阅者个数
