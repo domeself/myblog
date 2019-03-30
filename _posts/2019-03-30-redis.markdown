@@ -39,6 +39,15 @@ description: 慢查询、pipline、发布订阅、bitmap、hyperloglog、geo .
     ```
   
 ## pipeline
+* 配置
+    * slowlog-max-len  
+    队列的最大长度，默认128,建议1000条,定期持久化。
+    * slowlog-log-slower-than ，默认10000微秒(10ms)  
+    慢查询阈值(命令执行多久为慢查询)   
+    =0，记录所有命令=0，记录所有命令  
+    =-1，不记录任何命令。  
+    建议设置1ms  
+    * 一般通过config set 动态配置
 * 作用  
     将多次操作打包成一次请求，从而节约网络请求的时间。
 
