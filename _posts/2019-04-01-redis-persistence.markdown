@@ -7,6 +7,9 @@ author: supernova
 description: redis持久化、persistence
 ---
 ## 持久化方式
+| Name | 原地 | 稳定 | 最好 | 最坏 | 平均 |    
+| - | :-: | :-: | :-: | :-: | -: |
+| 冒泡 | 是 | 是 | O(n) | O(n2) | O(n2) |
 * 快照(RDB二进制文件)  
     * 三种写入策略
         * save(同步)  
@@ -31,9 +34,7 @@ description: redis持久化、persistence
         * 耗时，耗性能(io)  
         * 不可控，丢失数据
 * 日志(AOF)  
-| Name | 原地 | 稳定 | 最好 | 最坏 | 平均 |    
-| - | :-: | :-: | :-: | :-: | -: |   
-| 冒泡 | 是 | 是 | O(n) | O(n2) | O(n2) |          
+       
     * 三种写入策略
         * always    执行每条命令都会被从缓冲区fsync写入到AOF文件中。
         * everysec  每秒把缓冲区fsync到磁盘中的AOF文件中。
