@@ -35,12 +35,13 @@ description: redis持久化、persistence
     * 三种写入策略
         * always    执行每条命令都会被从缓冲区fsync写入到AOF文件中。
         * everysec  每秒把缓冲区fsync到磁盘中的AOF文件中。这是默认的策略。  
-        * no    操作系统自己决定。  
+        * no    操作系统自己决定。
         
         |命令 | always | everysec |no|
         | :---:| :---: | :---: |:---:|
         | 优点 | 不丢失数据 | 只丢失一秒数据 |不用管|
         | 缺点 | IO开销大 | 丢失一秒数据 |不可控|
+        
        * 配置
        ```
                 appendonly yes  开启AOF
@@ -61,4 +62,13 @@ description: redis持久化、persistence
             auto-aof-rewrite-min-size  64mb aof文件重写需要的大小
             auto-aof-rewrite-percentage 100 aof文件增长率
         ```
-          
+    * 使用策略
+    
+    |命令|RDB|AOF|
+    |:---:|:---:|:---:|     
+    |启动优先级|底|高|
+    |体积|小|大|
+    |恢复速度|快|慢|
+    |数据安全性|丢数据|根据策略决定|
+    |轻重|重|轻|
+    
