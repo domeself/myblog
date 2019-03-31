@@ -62,6 +62,7 @@ description: redis持久化、persistence
             auto-aof-rewrite-min-size  64mb aof文件重写需要的大小
             auto-aof-rewrite-percentage 100 aof文件增长率
         ```
+
 ## 使用策略  
 
 |命令|RDB|AOF|
@@ -82,6 +83,7 @@ description: redis持久化、persistence
     * 小分片，使用maxmemory对reids内存进行规划。最大内存设置为4G，限制持久化时开销。 
     * 监控(硬盘、内存、负载、网络)  
     * 足够的内存  
+
 ## 运维
 * CPU开销   
     RDB和AOF都属于CPU密集型操作，部署时不做CPU绑定，不和CPU密集型服务部署在一起。
