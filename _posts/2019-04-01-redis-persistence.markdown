@@ -6,10 +6,7 @@ tags: Redis
 author: supernova
 description: redis持久化、persistence
 ---
-## 持久化方式
-| Name | 原地 | 稳定 | 最好 | 最坏 | 平均 |    
-| - | :-: | :-: | :-: | :-: | -: |
-| 冒泡 | 是 | 是 | O(n) | O(n2) | O(n2) |
+## 持久化方式  
 * 快照(RDB二进制文件)  
     * 三种写入策略
         * save(同步)  
@@ -37,5 +34,11 @@ description: redis持久化、persistence
        
     * 三种写入策略
         * always    执行每条命令都会被从缓冲区fsync写入到AOF文件中。
-        * everysec  每秒把缓冲区fsync到磁盘中的AOF文件中。
+        * everysec  每秒把缓冲区fsync到磁盘中的AOF文件中。这是默认的策略。  
         * no    操作系统自己决定。  
+        
+        |命令 | always | everysec |no|
+        | :---:| :---: | :---: |:---:|
+        | 优点 | 不丢失数据 | 只丢失一秒数据 |不用管|
+        | 缺点 | IO开销大 | 丢失一秒数据 |不可控|
+          
