@@ -14,7 +14,7 @@ description: sentinel、高可用、哨兵
 * sentinel彼此交互对其他sentisel节点的看法，和自身信息。  
 每隔2秒每个sentinel通过sentinel的master节点的channel(_sentinel_:hello)和其他sentinel节点交换信息(pub/sub)
 * 在sentinel集群和redis集群中检测心跳  
-每1秒每个sentinel对其他sentinel和reids执行ping
+每1秒每个sentinel对其他sentinel和reids执行ping  
 ## 主观下线和客观下线
 * 主观下线  
 每个sentinel节点对redis节点下线的主观判断,由于网络原因或者自身的原因，会造成对redis节点状态的误判。
