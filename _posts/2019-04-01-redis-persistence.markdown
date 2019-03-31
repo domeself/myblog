@@ -43,6 +43,7 @@ description: redis持久化、persistence
         | 缺点 | IO开销大 | 丢失一秒数据 |不可控|
         
        * 配置  
+       
        ```
                 appendonly yes  开启AOF
                 appendfilename  xx.aof  文件保存路径
