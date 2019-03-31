@@ -24,6 +24,7 @@ description: cluster、集群
 ### 原生安装  
 * 配置  
 按照单机配置即可，额外添加了2个集群配置相  
+
 ```
 cluster-enable yes
 cluster-config-file  nodes-{port}.conf
