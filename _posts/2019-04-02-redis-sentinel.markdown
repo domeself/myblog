@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "sentinel"
+title:  "sentinel 哨兵"
 categories: Redis
 tags: Redis
 author: supernova
