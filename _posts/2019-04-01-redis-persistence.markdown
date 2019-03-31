@@ -41,4 +41,24 @@ description: redis持久化、persistence
         | :---:| :---: | :---: |:---:|
         | 优点 | 不丢失数据 | 只丢失一秒数据 |不用管|
         | 缺点 | IO开销大 | 丢失一秒数据 |不可控|
+       * 配置
+       ```
+                appendonly yes  开启AOF
+                appendfilename  xx.aof  文件保存路径
+                appendfsync everysec  策略选择
+                no-appendfsync-no-rewrite  no  是否在重写的时候，关闭正常aof
+        
+      ```
+    * AOF重写，减少磁盘占用量，加速恢复速度。
+        * 命令合并
+        * 只保留影响数据结果的操作
+        * 过期数据删除   
+       
+    * 重写方式
+        * bgrewriteaof，客户端发送命令，启动fork进程去完成重写，类似resave。
+        * 按照配置自动执行
+        ```
+            auto-aof-rewrite-min-size  64mb aof文件重写需要的大小
+            auto-aof-rewrite-percentage 100 aof文件增长率
+        ```
           
