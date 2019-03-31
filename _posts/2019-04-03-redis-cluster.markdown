@@ -19,6 +19,7 @@ description: cluster、集群
     * 每个槽映射一个数据子集，一般比节点数大。  
     * 良好的hash函数，比如CRC16  
     * 服务端分区，例如：Reids Cluster  
+
 ## 集群搭建  
 ### 原生安装
 * 配置  
