@@ -46,12 +46,13 @@ reids-cli -h redis1  -p port1 cluster addslot  xxx
 reids-cli -h redis2 -p port2 cluster addslot  xxx
 r
 ```
-* 设置主从
+* 设置主从  
 ```
 cluster replicate node-id
 reids-cli -h redis2 -p port2 cluster replicate  redis1-node-id 
 reids-cli -h redis4 -p port4 cluster replicate  redis3-node-id
-```
+```  
+
 ### 通过Ruby安装(推荐)
 * 安装ruby
     * 下载
@@ -98,7 +99,8 @@ reids-cli -h redis4 -p port4 cluster replicate  redis3-node-id
     * 迁移槽  
     reids-trib.rb reshared --from  nodeId1 --to nodeId2 --slots  count(槽的个数)  ip:port(在哪个节点上执行)
     * 脱离集群并下线
-    reids-trib.rb del-node ip:port(在那个节点执行)  nodeId
+    reids-trib.rb del-node ip:port(在那个节点执行)  nodeId  
+
 ## 客户端访问
 ### moved error
 客户端向一个节点发起对key的操作命令，这个节点先对这个key进行hash计算，如果这个key正好落在这个节点，  
