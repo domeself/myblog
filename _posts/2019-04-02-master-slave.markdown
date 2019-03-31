@@ -6,132 +6,72 @@ tags: Redis
 author: supernova
 description: 主从复制、master、slave
 ---
-## 慢查询
-*  特点
-    * 先进先出的队列
-    * 队列长度固定
-    * 保存在内存中
-* 注意事项
-    * 慢查询发生在命令执行阶段
-    * 客户端超时不一定慢查询，但慢查询是客户端超时的一个可能
-* 配置
-    * slowlog-max-len  
-        队列的最大长度，默认128
-        建议1000条
-        定期持久化
-    * slowlog-log-slower-than ，默认10000微秒(10ms)
-        慢查询阈值(命令执行多久化为慢查询)  
-        =0，记录所有命令
-        =-1，不记录任何命令
-        建议设置1ms
-    * 一般通过config set 动态配置
- ```
-         config set  slowlog-max-len  1000
-         config set  slowlog-log-slower-than  10000
- ```
+## 主从复制  
+* 作用
+    * 读写分离，减小master节点的压力。
+    * 数据备份，master节点宕机时，将slave节点升级为master节点。
+* 方式
+    * slaveof  
+        * 建立主从关系  
+    从slave节点上执行slaveof命令从master节点上复制数据。建立主从关系成功后，slave节点之前的数据会被删除。
+        * 取消主从关系  
+     从slave节点上执行slaveof no one，断开与master节点联系。
+        * 查看主从关系  
+        info replication
+    * 配置文件
+    ```
+        slaveof ip port
+        slaveof-read-only yes 从节点只做读的操作
+    ```
 
- * 命令
-    ```
-        slowlog get[n] : 从慢查询队列中获取n条记录
-        slowlog len : 查询队列中数据条数
-        slowlog reset : 情况慢查询队列
+## 全量复制
+* 名词说明
+    * run_id  
+    每次redis启动时会分配一个随机的run_id。
+    查看：redis-cli  info server
+    * 偏移量 repl_offset
+    查看：redis-cli info replication
+* 全量复制流程  
+1.slave节点请求全量复制。  
+2.执行bgsave，生成RDB文件。  
+3.通过网络传输给slave节点。  
+4.从节点清空数据，flushall。  
+5.加载从master节点复制的RDB文件到内存中。  
+6.可能的AOF重写。  
 
-    ```
-  
-## pipeline
-* 配置
-    * slowlog-max-len  
-    队列的最大长度，默认128,建议1000条,定期持久化。
-    * slowlog-log-slower-than ，默认10000微秒(10ms)  
-    慢查询阈值(命令执行多久为慢查询)   
-    =0，记录所有命令=0，记录所有命令  
-    =-1，不记录任何命令。  
-    建议设置1ms  
-    * 一般通过config set 动态配置
-* 作用  
-    将多次操作打包成一次请求，从而节约网络请求的时间。
-* pipeline与M操作的区别  
-    * M操作是原子性的，pipeline是非原子性的  
-    * M操作是同一个key执行多次，属于元素操作服务端可以直接处理;  
-    pipe是多个命令（不同key）一次请求，服务端要拆分命令，  
-    逐条执行，并按照顺序返回。  
-* pipeline只能作用在一个redis节点上,不支持集群模式。  
-* pipeline一次请求的数量不能过大，对网络和和客户端的等待时间，造成影响  
+## 部分复制
+* 部分复制流程
+master节点在执行写操作的时候，会将命令写往复制积压缓冲区的队列中。
+1.slave节点会向master节点发送pysnc{offset}{run_id}请求。  
+2.如果offset不在缓存队列中（buffer默认1MB），说明错过了很多数据，master节点会选择全量复制。  
+3.如果offset在婚车队列中，master会返回continue，并把从offset到最新的数据返回给slave，就是部分复制。 
+## 运维
+* 读写分离
+master执行write操作，slave执行read操作。
+    * 复制延迟，存在主从一致的问题  
+    master异步复制数据给slave存在时间差。  
+    slave阻塞，延迟接收到master的数据。
+    * 读到过期的数据  
+        redis删除过期数据有2中策略   
+        1.懒惰性策略：在key被执行的时候，判断是否过期，过期删除返回给客户端null  
+        2.定时采样：每隔一段时间检测一批key有没有过期。当数量非常多，采样速率跟不上key的产生速率。造成很多数据没有删除。
+        slave节点不能删除数据，可能读到脏的数据。  
+    * 从节点故障
+* 主从配置不一致
+    * 内存分配不一致，导致从节点数据丢失。
+    * 主从优化参数一致，产生诡异问题。
+* 规避全量复制
+    * 第一次复制不可避免。
+        * 主节点分配小一点。
+        * 低峰的时候进行全量复制。
+    * 节点运行run_id不匹配
+        * 利用故障转移，哨兵或者集群解决。  
+    * 复制积压缓冲区不足  
+        * 网络中断，全量复制。
+        * 修改默认值 rel_backlog_size
+* 复制风暴
+    * 单节点  
+    master节点挂了很多slave节点。当master重启时，产生大量全量复制。
+    * 单机器  
+    一台机器上部署了多台master节点，当master重启时，产生大量全量复制。采用master分散部署或者高可用。
 
-## 发布订阅   
-发布者发布了一个信息到频道，所有订阅的频道的订阅者都能收到
-* 发布者(publisher)
-    ```
-        redis>publish channelName "messger"
-        返回订阅者个数
-     ```
-* 订阅者(subscriber)
-    ```
-        订阅：
-        redis>subscriber channelName
-        取消订阅：
-        redis>unsubscriber channelName
-        按照模式匹配订阅
-        redis>psubscriber [pattern...]
-        取消模式匹配订阅
-        redis>punsubscriber [pattern...]
-    ```
-* 频道(channel)
-    ```
-        //查看至少有一个订阅者的频道
-        pubsub channels
-        //查看频道的订阅者
-        pubsub numsub[channel...]
-    ```
-## bitmap(位图)  
-   Bitmap是一串连续的2进制数字（0或1），每一位所在的位置为偏移(offset)  位图计数（Population Count）
-   是bitmap中值为1的位的个数。位图计数的效率很高。
-* 命令 
-   ```
-    设置key中偏移量为offset，为value  
-    setbit key offset value 
-    //获得key中偏移量为offset的value
-    getbit key offset
-    //获取范围内bit为1的数量，如果不指定就为全部范围
-    bitcount key [start end]
-    ```
-* 应用(统计活跃用户)  
-    
-    为了统计今日登录的用户数，我们建立了一个bitmap,每一位标识一个用户ID。  
-    当某个用户访问我们的网页或执行了某个操作，就在bitmap中把标识此用户的位置为1。  
-    在Redis中获取此bitmap的key值是通过用户执行操作的类型和时间戳获得的。
-    每次用户登录时会执行一次redis.setbit(daily_active_users, user_id, 1)。  
-    将bitmap中对应位置的位置为1，时间复杂度是O(1)  。
-    日活跃用户每天都变化，所以需要每天创建一个新的bitmap。  
-    我们简单地把日期添加到key后面。如果要按周或月统计，只要对这周或这个月的  
-    所有bitmap求并集，得出新的bitmap，在对它做位图计数。
-## Hyperloglog    
-* 基于HyperLogLog算法，极小空间完成独立数量统计    
-   ```        
-    添加元素
-    pfadd key element[elements...]
-    计算独立总数
-    pfcount key [keys ..]
-    合并多个typerLoglog
-    pfmerge destkey  sourcekey[sourcekey...]
-   ```
-* 注意事项  
-    * 错误率0.81%
-    * 只能统计数量，并不能得到具体元素
-## GEO  
-* 计算地理位置相关
- ```
-    //向key中添加城市和对应的经纬度
-        geoadd  key  longitude latitude member
-        //获取城市的经纬度
-        geopos key  member
-        //两个城市之间距离
-        geodist key member1 member2[unit]
-        //根据经纬度获取范围内的城市
-        georadius key longitude latitude radiusm|km|ft|mi [withcoord]  
-        [withdist] [withhash][Count count][asc|desc][store key][storedistkey]
-        //根据城市获取范围内的城市
-        georadiusbymember key member radiusm|km|ft|mi [withcoord]  
-        [withdist] [withhash][Count count][asc|desc][store key][storedistkey]
- ```
-   
