@@ -21,9 +21,9 @@ description: cluster、集群
     * 服务端分区，例如：Reids Cluster  
   
 ## 集群搭建  
-### 原生安装
+### 原生安装  
 * 配置  
-按照单机配置即可，额外添加了2个集群配置相
+按照单机配置即可，额外添加了2个集群配置相  
 ```
 cluster-enable yes
 cluster-config-file  nodes-{port}.conf
