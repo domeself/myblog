@@ -44,13 +44,12 @@ description: redis持久化、persistence
         
        * 配置  
        
-       ```
+        ```
                 appendonly yes  开启AOF
                 appendfilename  xx.aof  文件保存路径
                 appendfsync everysec  策略选择
-                no-appendfsync-no-rewrite  no  是否在重写的时候，关闭正常aof
-        
-      ```
+                no-appendfsync-no-rewrite  no  是否在重写的时候，关闭正常aof 
+        ```
     * AOF重写，减少磁盘占用量，加速恢复速度。
         * 命令合并
         * 只保留影响数据结果的操作
