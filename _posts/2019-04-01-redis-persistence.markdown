@@ -58,10 +58,10 @@ description: redis持久化、persistence
     * 重写方式
         * bgrewriteaof，客户端发送命令，启动fork进程去完成重写，类似resave。
         * 按照配置自动执行
-    ```
+        ```
             auto-aof-rewrite-min-size  64mb aof文件重写需要的大小
             auto-aof-rewrite-percentage 100 aof文件增长率
-    ```
+        ```
     * 使用策略
     
     |命令|RDB|AOF|
