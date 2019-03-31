@@ -29,6 +29,7 @@ description: redis持久化、persistence
 * 缺点  
     * 耗时，耗性能(io)  
     * 不可控，丢失数据  
+    
 ## 日志(AOF)  
        
 * 三种写入策略
@@ -62,6 +63,7 @@ description: redis持久化、persistence
             auto-aof-rewrite-percentage 100 aof文件增长率
         ```
 ## 使用策略  
+
 |命令|RDB|AOF|
 |:---:|:---:|:---:|     
 |启动优先级|底|高|
