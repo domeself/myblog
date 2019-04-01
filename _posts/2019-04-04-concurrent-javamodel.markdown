@@ -37,6 +37,7 @@ class VolatileExample {
 * volatile规则  
 对volatile变量的写操作一定happens-before 对volatile变量的读操作。结合传递性可得出结论：   
 当A线程执行writer，B线程执行reader方法时 x一定=42  
+ 
 ```
 // 以下代码来源于【参考 1】
 class VolatileExample {
