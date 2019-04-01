@@ -59,7 +59,8 @@ class VolatileExample {
 
 * 管程中锁的规则  
 主要是针对synchronized的操作。    
-它指的是A线程在synchronizad代码块中对共享变量进行操作然后释放锁，B线程获得锁进入代码块是可以看见之前A的操作结果。
+它指的是A线程在synchronizad代码块中对共享变量进行操作然后释放锁，B线程获得锁进入代码块是可以看见之前A的操作结果。  
+
 ```
 synchronized (this) { // 此处自动加锁
   // x 是共享变量, 初始值 =10
@@ -69,8 +70,10 @@ synchronized (this) { // 此处自动加锁
 } // 此处自动解锁
 
 ```
+
 * 线程start规则  
 如果A线程调用了B线程的start方法，那么B线程能够看到A线程在启动B线程之前的操作。
+
 ```
 Thread B = new Thread(()->{
   // 主线程调用 B.start() 之前
@@ -83,10 +86,12 @@ var = 77;
 B.start();
 
 ```
+
 * 线程中断规则  
-一个线程调用另一个线程的interrupt happens-before于被中断的线程发现中断
+一个线程调用另一个线程的interrupt happens-before于被中断的线程发现中断  
 * 线程join规则  
-A线程调用了B线程的join方法，那么在B线程结束之后，A是能看到B对共享变量的修改的。
+A线程调用了B线程的join方法，那么在B线程结束之后，A是能看到B对共享变量的修改的。  
+
 ```
 Thread B = new Thread(()->{
   // 此处对共享变量 var 修改
@@ -102,12 +107,14 @@ B.join()
 // 此例中，var==66
 
 ```
+
 * 对象终结法则  
 一个对象的创建一定happens-before对象的finalizer  
 
 ## final
 final是正向激励，它告诉编译器和cpu，final修饰的变量是稳定不变的，可以尽情的优化哦。  
-但是要避免引用的逸出例如：
+但是要避免引用的逸出例如：  
+
 ```
 // 以下代码来源于【参考 1】
 final int x;
@@ -120,4 +127,5 @@ public FinalFieldExample() {
 }
 
 ```
+
 我们之前介绍过由于重排序的原因，x=3可能在global.obj = this之后执行，此时通过this.x=0
