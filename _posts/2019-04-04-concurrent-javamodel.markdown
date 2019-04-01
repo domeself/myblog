@@ -35,8 +35,8 @@ class VolatileExample {
 * 传递性规则  
 如果 A Happens-Before B，且 B Happens-Before C，那么 A Happens-Before C。  
 * volatile规则  
-对volatile变量的写操作一定happens-before 对volatile变量的读操作。结合传递性可得出结论：  
-当A线程执行writer，B线程执行reader方法时 x一定=42
+对volatile变量的写操作一定happens-before 对volatile变量的读操作。结合传递性可得出结论：   
+当A线程执行writer，B线程执行reader方法时 x一定=42  
 ```
 // 以下代码来源于【参考 1】
 class VolatileExample {
@@ -55,6 +55,7 @@ class VolatileExample {
 }
 
 ```
+
 * 管程中锁的规则  
 主要是针对synchronized的操作。    
 它指的是A线程在synchronizad代码块中对共享变量进行操作然后释放锁，B线程获得锁进入代码块是可以看见之前A的操作结果。
