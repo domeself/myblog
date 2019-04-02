@@ -96,8 +96,8 @@ eureka:
 此时我们就需要打开注册功能了
 
 ```
-register-with-eureka: true #不需要作为注册中心的客户端
-fetch-registry: true #取消向注册中心获取信息
+register-with-eureka: true #需要作为注册中心的客户端
+fetch-registry: true #向注册中心获取信息
 ```
 
 * EurekaServer1的配置
@@ -115,14 +115,14 @@ eureka:
       register-with-eureka: true #不需要作为注册中心的客户端
       fetch-registry: true #取消向注册中心获取信息
       service-url:
-        defaultZone: http://EurekaServer2/eureka/,http://EurekaServer2/eureka3/
+        defaultZone: http://EurekaServer2/eureka/,http://EurekaServer3/eureka/
 ```
 
 * EurekaServer2的配置
 
 ```
 server:
-  port: 8761
+  port: 8762
 eureka:
   instance:
     hostname: eurekaServer2
@@ -130,10 +130,10 @@ eureka:
     enable-self-preservation: false # 关闭自我保护模式（默认为打开）
     eviction-interval-timer-in-ms: 5000  # 续期时间，即扫描失效服务的间隔时间（缺省为60*1000ms）
   client:
-      register-with-eureka: true #不需要作为注册中心的客户端
-      fetch-registry: true #取消向注册中心获取信息
+      register-with-eureka: true #需要作为注册中心的客户端
+      fetch-registry: true #向注册中心获取信息
       service-url:
-        defaultZone: http://EurekaServer1/eureka/,http://EurekaServer2/eureka3/
+        defaultZone: http://EurekaServer1/eureka/,http://EurekaServer2/eureka/
 ```
 
 * EurekaServer3的配置
@@ -141,7 +141,7 @@ eureka:
 ```
 
 server:
-  port: 8761
+  port: 8763
 eureka:
   instance:
     hostname: erekaServer3
@@ -149,10 +149,10 @@ eureka:
     enable-self-preservation: false # 关闭自我保护模式（默认为打开）
     eviction-interval-timer-in-ms: 5000  # 续期时间，即扫描失效服务的间隔时间（缺省为60*1000ms）
   client:
-      register-with-eureka: true #不需要作为注册中心的客户端
-      fetch-registry: true #取消向注册中心获取信息
+      register-with-eureka: true #需要作为注册中心的客户端
+      fetch-registry: true #向注册中心获取信息
       service-url:
-        defaultZone: http://EurekaServer1/eureka/,http://EurekaServer2/eureka3/
+        defaultZone: http://EurekaServer1/eureka/,http://EurekaServer2/eureka/
 
 ```
 

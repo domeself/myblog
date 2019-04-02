@@ -18,6 +18,7 @@ description: 客户端负载均衡
 
 * 开启 
 配置restTemplate的时候，用@LoadBalanced注解  
+
 ```
     @Bean
     @LoadBalanced
