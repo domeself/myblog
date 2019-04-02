@@ -6,7 +6,8 @@ tags: springCloud
 author: supernova
 description: 通过注册中心，服务自动注册和发现 .
 ---
-![11](highlevel.png)
+
+![图片pic1]({{ "/assets/img/highlevel.png" | absolute_url }})
 
 ## 服务中心
 常见的服务中心：
