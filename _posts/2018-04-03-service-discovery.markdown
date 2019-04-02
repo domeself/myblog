@@ -24,7 +24,7 @@ description: 通过注册中心，服务自动注册和发现 .
     * 平均维修时间（MTTR）
     系统发生故障后维修和重新恢复正常运行平均花费的时间。
 高可用性=MTTF/(MTTF+MTTR) * 100%  
-![avatar](https://static001.geekbang.org/resource/image/f5/fc/f57bca3f3286acbd1b9f85e38d55e2fc.jpg)
+![avatar](../assets/img/highlevel.png)
 
 
 ## 服务注册
