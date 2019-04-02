@@ -6,9 +6,6 @@ tags: springCloud
 author: supernova
 description: 通过注册中心，服务自动注册和发现 .
 ---
-
-![图片pic1]({{ "/assets/img/highlevel.png" | absolute_url }})
-
 ## 服务中心
 常见的服务中心：
 * Apache Zookeeper  
@@ -27,7 +24,7 @@ description: 通过注册中心，服务自动注册和发现 .
     * 平均维修时间（MTTR）
     系统发生故障后维修和重新恢复正常运行平均花费的时间。
 高可用性=MTTF/(MTTF+MTTR) * 100%  
-
+![图片pic1]({{ "/assets/img/highlevel.png" | absolute_url }})
 
 
 
