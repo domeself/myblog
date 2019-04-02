@@ -7,7 +7,7 @@ author: supernova
 description: 通过注册中心，服务自动注册和发现 .
 ---
 ## 注册中心
-### 常见的服务中心：
+### 常见的服务注册中心：
 * Apache Zookeeper  
 高一致行，可用性低  
 * Netflix Eureka  
@@ -25,10 +25,24 @@ description: 通过注册中心，服务自动注册和发现 .
     * 平均维修时间（MTTR）  
     系统发生故障后维修和重新恢复正常运行平均花费的时间。
 高可用性=MTTF/(MTTF+MTTR) * 100%  
-![图片pic1]({{ "/assets/img/highlevel.png" | absolute_url }})
+![高可用等级]({{ "/assets/img/highlevel.png" | absolute_url }})  
 
 
 
-## 服务注册
-## 服务发现
+## Netflix Eureka
+### 服务端Eureka Server
+Eureka Server是Euraka Client的注册服务中心、管理所有注册服务、实例信息和状态。  
+运行Eureka Server：
+依赖：
+
+```
+<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+        </dependency>
+```
+
+激活：@EnableEurekaServer
+### 服务注册
+### 服务发现
    
