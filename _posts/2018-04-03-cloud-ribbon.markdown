@@ -37,13 +37,13 @@ restTemplet是spring对http请求restful风格的封装。他的实现有3种：
 在微服务客户端开发过程中，我们是不知道服务的ip地址和端口的，只知道服务名，那么我们如何调用？  
 将ribbon与restTemplet结合可以做到更加服务名调用
 
-## 开启ribbon
+## 引入ribbon
 * 依赖
 
 ```
     <dependency>
 		<groupId>org.springframework.cloud</groupId>
-		<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+		<artifactId>spring-cloud-starter-ribbon</artifactId>
 	</dependency>
 ```
 

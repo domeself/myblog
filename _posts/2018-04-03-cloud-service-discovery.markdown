@@ -38,7 +38,7 @@ Eureka Server是Euraka Client的注册服务中心、管理所有注册服务、
 ```
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <artifactId>spring-cloud-starter-eureka-server</artifactId>
         </dependency>
 ```
 
@@ -69,7 +69,7 @@ eureka:
 ```
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <artifactId>spring-cloud-starter-euraka</artifactId>
         </dependency>
 ```
 
