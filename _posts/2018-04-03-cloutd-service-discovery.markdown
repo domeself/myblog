@@ -162,9 +162,29 @@ EurekaClient端的修改
 service-url:
         defaultZone: http://EurekaServer1/eureka/,http://EurekaServer2/eureka/,http://EurekaServer3/eureka/
 ```
+
+## 服务注册
+eurekaClient在启动的时候会通过发送rest请求的方式，将自己注册到eurekaServer，同时带上了自身服务的一些元数据。  
+eurekaServer将元数据储存在一个双层Map中，第一层的key是服务名，第二层的key是实例名。
+## 服务同步  
+如果是高可用的eurekaServer集群，可能相同的2个服务实例被注册到了不同的eurekaServer上。  
+因为eurekaServer也是相互注册的，当eurekaClient注册到一个eurekaServer上时，eurekaServer会将该请求转发给其他节点。
+## 服务续约(renew)
+eurekaClient会维护一个心跳持续告诉eurekaServer自己还活着，防止被eurekaServer的"剔除任务"剔除。
+
+```
+eureka:
+  instance:
+      lease-renewal-interval-in-seconds: 5      # 心跳时间，即服务续约间隔时间（缺省为30s），定义服务续约任务的调用间隔
+      lease-expiration-duration-in-seconds: 15  # 发呆时间，即服务续约到期时间（缺省为90s），定义服务失效的时间
+```
+
   
 ## 服务发现 
-服务发现是由eurekaClient去完成
+服务发现是由eurekaClient去完成，eurekaClient在启动的时候会通过发送rest请求的方式，从eurekaServer获得服务清单。 
+客户端缓存该份清单，每隔30秒更新一次。
+通过eureka.client.registry-fetch-interval-seconds: 10可修改更新间隔。
+
 
 ```
 @Autowired
@@ -173,7 +193,7 @@ private EurekaDiscoveryClient client;
 @Bean
     ApplicationRunner runner()  {
         return args -> {
-            client.getServices().forEach(System.out::println); //所有的服务名
+            client.getServices().forEach(t->System.out.println("服务名："+t)); //所有的服务名
             //获取一个服务的所有可用实例
             client.getInstances("MEMBER-SERVICE").stream().forEach(
                    t-> {
@@ -185,3 +205,21 @@ private EurekaDiscoveryClient client;
             );
         };
 ```
+
+结果打印 
+ 
+```
+服务名：member-service
+
+DESKTOP-A1N9C51:8762instandceId=nulluri=http://DESKTOP-A1N9C51:8762scheme=null
+key=management.port=8762
+USER-20170717OB:8762instandceId=nulluri=http://USER-20170717OB:8762scheme=null
+key=management.port=8762
+LAPTOP-LIUQN:8762instandceId=nulluri=http://LAPTOP-LIUQN:8762scheme=null
+key=management.port=8762
+key=jmx.port=49170
+```
+
+## 服务下线
+当程序正常的关闭或者重启时，客户端会发送一个rest请求给一个eurekaServr，  
+eurekaServr会将该服务置为下线状态，广播给其他的eurekaServr。  
