@@ -14,13 +14,13 @@
     {% if paginator.page == 1 %}
     <span class="page-number current">1</span>
     {% else %}
-    <a class="page-number" href="/">1</a>
+    <a class="page-number" href="/myblog/">1</a>
     {% endif %}
     {% for i in (2..paginator.total_pages) %}
     {%if i == paginator.page %}
     <span class="page-number current">{{ i }}</span>
     {% else %}
-    <a class="page-number" href="/page{{ i }}">{{ i }}</a>
+    <a class="page-number" href="/myblog/page{{ i }}">{{ i }}</a>
     {% endif %}
     {% endfor %}
      {% if paginator.next_page %}
