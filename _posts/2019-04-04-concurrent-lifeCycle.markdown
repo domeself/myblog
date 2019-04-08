@@ -2,7 +2,7 @@
 layout: post
 title:  "Java线程生命周期"
 categories: 多线程
-tags: 多线程、lifeCycle
+tags: 并发
 author: supernova
 description: Java线程生命周期
 ---

@@ -2,7 +2,7 @@
 layout: post
 title:  "并发编程问题源头"
 categories: 多线程
-tags: 多线程、concurrent、并发
+tags:并发
 author: supernova
 description: 并发编程问题源头
 ---

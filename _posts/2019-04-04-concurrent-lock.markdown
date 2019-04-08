@@ -2,7 +2,7 @@
 layout: post
 title:  "互斥锁"
 categories: 多线程
-tags: 多线程、concurrent、并发、synchronized、互斥锁
+tags: 并发
 author: supernova
 description: 互斥锁解决原子性问题
 ---

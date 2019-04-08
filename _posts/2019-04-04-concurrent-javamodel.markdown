@@ -2,7 +2,7 @@
 layout: post
 title:  "java内存模型"
 categories: 多线程
-tags: 多线程、concurrent、并发、java内存模型
+tags: 并发
 author: supernova
 description: java内存模型解决线程安全性问题
 ---

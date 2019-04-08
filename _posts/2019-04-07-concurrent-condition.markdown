@@ -2,7 +2,7 @@
 layout: post
 title:  "Lock和Condition"
 categories: 多线程
-tags: Lock、Condition
+tags: 并发
 author: supernova
 description: Lock和Condition
 ---

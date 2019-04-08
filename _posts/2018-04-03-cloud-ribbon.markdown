@@ -2,7 +2,7 @@
 layout: post
 title:  "Ribbon 负载均衡器"
 categories: springCloud
-tags: Ribbon
+tags: springCloud
 author: supernova
 description: 客户端负载均衡
 ---
