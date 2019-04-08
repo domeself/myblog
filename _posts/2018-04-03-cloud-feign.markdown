@@ -24,28 +24,19 @@ description: 声明式服务调用.
 * 开启
 @ EnableFeignClients
 
-## 使用方式
+## 服务提供端
 * 接口定义
 
 ```
-@FeignClients("hello-service") //服务名称，不区分大小写
-public interface HelloService{
-@RequestMapping("/hello")
-String hello();
+@RequestMapping("/email")
+@FeignClient(serviceId = "MESSAGE-SERVICE",qualifier = "email",fallback = EmailServiceFallBack.class)
+public interface IEmailClient{
+@GetMapping("/sendVerificationCode")
+    ResultEntity sendVerificationCode(@RequestParam("templetCode")String templetCode, @RequestParam("identification")String identification);
 }
 ```
 
-* 接口调用
 
-```
-@Autowired
-HelloService helloService;
-
-public String hello(){
-
-return helloService.hello();
-}
-```
 
 * 参数绑定  
 上面展示的是最简单的示例，并没有方法参数，但是一般接口调用几乎都是有参数的。
@@ -80,7 +71,47 @@ public String hello(@RequestBody User user){
 对象必须要有默认的构造方法，不然，在对象转JSON字符串的时候会报错。  
 而且参数有对象一定要用POST方法 
 
+* 接口实现
 
+```
+@RestController
+public class EmailServieController implements IEmailClient {
+ @Override
+    public ResultEntity sendVerificationCode(String templetCode, String identification) {
+            xxx....
+            return resultEntity;
+    }
+}
+```
+
+* 服务降级
+
+```
+@Component
+@RequestMapping("/fallback/email")
+public class EmailServiceFallBack implements IEmailClient {
+
+
+    @Override
+    public ResultEntity<MidSms> sendVerificationCode(String templetCode, String identification){
+        return new ResultEntityFallBack();
+    }
+}
+
+```
+
+## 接口调用
+
+```
+@RestController
+public class TestController implements TestInterface {
+    public static Logger log = LoggerFactory.getLogger(TestController.class);
+    @Autowired
+    @Qualifier("email")
+    private IEmailClient emailClient;
+}
+
+```
  
 
 
