@@ -25,7 +25,7 @@ defaults:
       layout: "post"
 
 #### Pagination
-paginate: 10
+paginate: 5
 
 #### Site
 title : Supernova‘s blog
